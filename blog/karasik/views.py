@@ -53,4 +53,4 @@ def index(request):
 
 
 def main(request):
-    return HttpResponse('Главная страница')
+    return HttpResponse('<h2>Главная страница</h2>')
