@@ -20,7 +20,7 @@ signs = {
 def get_info_about_zodiac_sign(request, sign_zodiac: str):
     description = signs.get(sign_zodiac.lower(), None)
     if description:
-        return HttpResponse(description)
+        return HttpResponse(f'<h2>{description}</h2>')
     return HttpResponseNotFound(f"Неизвестный знак зодиака - {sign_zodiac}")
 
 
@@ -36,8 +36,20 @@ def get_info_about_zodiac_sign_by_number(request, sign_zodiac: int):
 
 
 
-def goroscope(request):
-    return HttpResponse('Гороскопы')
+def index(request):
+    zodiacs = list(signs)
+
+    li_elements = ''
+    for sign in zodiacs:
+        redirect_path = reverse('horoscope-name', args=(sign,))
+        li_elements += f"<h2><li> <a href='{redirect_path}'>{sign.title()} </a></li></h2>"
+    response = f'''
+    <ul>
+    {li_elements}
+    </ul>
+
+'''
+    return HttpResponse(response)
 
 
 def main(request):
